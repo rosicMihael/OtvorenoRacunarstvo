@@ -4,7 +4,7 @@
 Ovaj repozitorij sadrži skup podataka korišten u laboratorijskim vježbama iz kolegija **Otvoreno računarstvo**.  
 Svi podaci su **javno dostupni** i **pravilno licencirani**.
 
-**Izvor:** [Vatrogasna zajednica grada Zagreba](https://www.vzgz.hr),  [Vatrogasna zajednica Zagrebačke županije](http://www.vzzz.hr)
+**Izvori:** [Vatrogasna zajednica grada Zagreba](https://www.vzgz.hr),  [Vatrogasna zajednica Zagrebačke županije](http://www.vzzz.hr)  
 **Autor:** Mihael Rošić  
 **Verzija skupa podataka:** 1.0 (1. laboratorijska vježba)  
 **Jezik podataka:** hrvatski  
