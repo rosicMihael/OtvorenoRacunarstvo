@@ -1,0 +1,117 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.4
+-- Dumped by pg_dump version 17.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: dvdi; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dvdi (
+    dobrovoljno_drustvo_id integer NOT NULL,
+    naziv character varying(255) NOT NULL,
+    oib character varying(11),
+    godina_osnutka integer,
+    broj_clanova integer,
+    adresa_id integer NOT NULL,
+    kontakt_email character varying(255),
+    web_stranica character varying(255),
+    predsjednik_id integer,
+    zapovjednik_id integer,
+    tajnik_id integer
+);
+
+
+ALTER TABLE public.dvdi OWNER TO postgres;
+
+--
+-- Name: dvdi_dobrovoljno_drustvo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.dvdi_dobrovoljno_drustvo_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.dvdi_dobrovoljno_drustvo_id_seq OWNER TO postgres;
+
+--
+-- Name: dvdi_dobrovoljno_drustvo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.dvdi_dobrovoljno_drustvo_id_seq OWNED BY public.dvdi.dobrovoljno_drustvo_id;
+
+
+--
+-- Name: dvdi dobrovoljno_drustvo_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi ALTER COLUMN dobrovoljno_drustvo_id SET DEFAULT nextval('public.dvdi_dobrovoljno_drustvo_id_seq'::regclass);
+
+
+--
+-- Name: dvdi dvdi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi
+    ADD CONSTRAINT dvdi_pkey PRIMARY KEY (dobrovoljno_drustvo_id);
+
+
+--
+-- Name: dvdi dvdi_adresa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi
+    ADD CONSTRAINT dvdi_adresa_id_fkey FOREIGN KEY (adresa_id) REFERENCES public.adresa(adresa_id);
+
+
+--
+-- Name: dvdi dvdi_predsjednik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi
+    ADD CONSTRAINT dvdi_predsjednik_id_fkey FOREIGN KEY (predsjednik_id) REFERENCES public.osoba(osoba_id);
+
+
+--
+-- Name: dvdi dvdi_tajnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi
+    ADD CONSTRAINT dvdi_tajnik_id_fkey FOREIGN KEY (tajnik_id) REFERENCES public.osoba(osoba_id);
+
+
+--
+-- Name: dvdi dvdi_zapovjednik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dvdi
+    ADD CONSTRAINT dvdi_zapovjednik_id_fkey FOREIGN KEY (zapovjednik_id) REFERENCES public.osoba(osoba_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
