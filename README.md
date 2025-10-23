@@ -4,7 +4,7 @@
 Ovaj repozitorij sadrži skup podataka korišten u laboratorijskim vježbama iz kolegija **Otvoreno računarstvo**.  
 Svi podaci su **javno dostupni** i **pravilno licencirani**.
 
-**Izvor:** [Vatrogasna zajednica grada Zagreba](https://www.vzgz.hr)  
+**Izvor:** [Vatrogasna zajednica grada Zagreba](https://www.vzgz.hr),  [Vatrogasna zajednica Zagrebačke županije](http://www.vzzz.hr)
 **Autor:** Mihael Rošić  
 **Verzija skupa podataka:** 1.0 (1. laboratorijska vježba)  
 **Jezik podataka:** hrvatski  
@@ -24,7 +24,7 @@ CC0 se često koristi za znanstvene podatke, baze podataka i javne informacije.
 | **adresa** | Objekt koji sadrži lokacijske podatke DVD-a |
 | • ulica | Naziv ulice i kućni broj sjedišta društva |
 | • poštanskiBroj | Poštanski broj područja |
-| • grad | Naziv grada ili naselja |
+| • grad | Naziv grada |
 | **kontaktEmail** | Službena e-mail adresa društva za kontakt |
 | **webStranica** | Službena web stranica društva |
 | **OIB** | Jedinstveni identifikacijski broj društva |
@@ -41,6 +41,6 @@ CC0 se često koristi za znanstvene podatke, baze podataka i javne informacije.
 
 ## Napomena o izvoru
 
-Dio informacija temelji se na javno dostupnim podacima objavljenim na mrežnim stranicama **Vatrogasne zajednice grada Zagreba (VZGZ)**.  
-Podaci su ručno obrađeni i prilagođeni kako bi bili strukturirani i otvoreno dostupni za potrebe obrazovanja.
-```
+Informacije se temelje na javno dostupnim podacima objavljenim na mrežnim stranicama **Vatrogasne zajednice grada Zagreba (VZGZ)** i **Vatrogasne zajednice Zagrebačke županije (VZZŽ)**.  
+Podaci su ručno obrađeni i prilagođeni kako bi bili strukturirani i otvoreno dostupni.
+
