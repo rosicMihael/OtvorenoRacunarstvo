@@ -1,0 +1,31 @@
+dvd_id,naziv,oib,ulica,postanski_broj,grad,gradska_cetvrt,email,telefon,web_stranica,godina_osnutka,broj_clanova,uloga,ime,prezime,kontakt
+1,Dobrovoljno vatrogasno društvo Trnje,58878158696,Budmanijeva 9,10000,Zagreb,Trnje,trnje@vzgz.hr,016184524,http://www.dvdtrnje.hr,1934,167,predsjednik,Matej,Baturić,0916101063
+1,Dobrovoljno vatrogasno društvo Trnje,58878158696,Budmanijeva 9,10000,Zagreb,Trnje,trnje@vzgz.hr,016184524,http://www.dvdtrnje.hr,1934,167,zapovjednik,Mladen,Popović,0989542488
+1,Dobrovoljno vatrogasno društvo Trnje,58878158696,Budmanijeva 9,10000,Zagreb,Trnje,trnje@vzgz.hr,016184524,http://www.dvdtrnje.hr,1934,167,tajnik,Dario,Radović,0919341997
+2,Dobrovoljno vatrogasno društvo Trešnjevka,46202332525,Selska 116,10000,Zagreb,Trešnjevka - sjever,tresnjevka@vzgz.hr,013634052,https://www.dvdtresnjevka.hr,1930,185,predsjednik,Branko,Markoč,0916930688
+2,Dobrovoljno vatrogasno društvo Trešnjevka,46202332525,Selska 116,10000,Zagreb,Trešnjevka - sjever,tresnjevka@vzgz.hr,013634052,https://www.dvdtresnjevka.hr,1930,185,zapovjednik,Boris,Korkut,098369358
+2,Dobrovoljno vatrogasno društvo Trešnjevka,46202332525,Selska 116,10000,Zagreb,Trešnjevka - sjever,tresnjevka@vzgz.hr,013634052,https://www.dvdtresnjevka.hr,1930,185,tajnik,Sabina,Kucelj,0912811129
+3,Dobrovoljno vatrogasno društvo Sesvete,19852900977,Varaždinska 42,10360,Sesvete,Sesvete,sesvete@vzgz.hr,012000125,https://www.dvd-sesvete.hr,1930,104,predsjednik,Matija,Ruga,0916930264
+3,Dobrovoljno vatrogasno društvo Sesvete,19852900977,Varaždinska 42,10360,Sesvete,Sesvete,sesvete@vzgz.hr,012000125,https://www.dvd-sesvete.hr,1930,104,zapovjednik,Drago,Ruga,0916930652
+3,Dobrovoljno vatrogasno društvo Sesvete,19852900977,Varaždinska 42,10360,Sesvete,Sesvete,sesvete@vzgz.hr,012000125,https://www.dvd-sesvete.hr,1930,104,tajnik,Stjepan,Čukac,0977966466
+4,Dobrovoljno vatrogasno društvo Horvati,88967107021,Horvaćanski trg 3,10436,Rakov Potok,Brezovica,horvati@vzgz.hr,016539191,https://dvd-horvati.hr,1928,127,predsjednik,Miroslav,Prevendar,0915238292
+4,Dobrovoljno vatrogasno društvo Horvati,88967107021,Horvaćanski trg 3,10436,Rakov Potok,Brezovica,horvati@vzgz.hr,016539191,https://dvd-horvati.hr,1928,127,zapovjednik,Dario,Karasman,0922322283
+4,Dobrovoljno vatrogasno društvo Horvati,88967107021,Horvaćanski trg 3,10436,Rakov Potok,Brezovica,horvati@vzgz.hr,016539191,https://dvd-horvati.hr,1928,127,tajnik,Filip,Prevendar,0913460910
+5,Dobrovoljno vatrogasno društvo Gračani,77538301819,Gračanski Mihaljevac 3,10000,Zagreb,Podsljeme,gracani@vzgz.hr,014674029,http://dvdgracani.hr,1945,122,predsjednik,Dubravko,Bukovac,0981933583
+5,Dobrovoljno vatrogasno društvo Gračani,77538301819,Gračanski Mihaljevac 3,10000,Zagreb,Podsljeme,gracani@vzgz.hr,014674029,http://dvdgracani.hr,1945,122,zapovjednik,Jurica,Biruški,0981671615
+5,Dobrovoljno vatrogasno društvo Gračani,77538301819,Gračanski Mihaljevac 3,10000,Zagreb,Podsljeme,gracani@vzgz.hr,014674029,http://dvdgracani.hr,1945,122,tajnik,Fran,Varga,0996858151
+6,Dobrovoljno vatrogasno društvo Botinec,49493163484,Zlatarova zlata 79,10020,Zagreb,Novi Zagreb - zapad,botinec@vzgz.hr,016524681,http://www.dvdbotinec.hr,1972,110,predsjednik,Krešimir,Tkalec,0915001727
+6,Dobrovoljno vatrogasno društvo Botinec,49493163484,Zlatarova zlata 79,10020,Zagreb,Novi Zagreb - zapad,botinec@vzgz.hr,016524681,http://www.dvdbotinec.hr,1972,110,zapovjednik,Ivan,Dorotić,0955283367
+6,Dobrovoljno vatrogasno društvo Botinec,49493163484,Zlatarova zlata 79,10020,Zagreb,Novi Zagreb - zapad,botinec@vzgz.hr,016524681,http://www.dvdbotinec.hr,1972,110,tajnik,Mirjana,Pranjić,0917912959
+7,Dobrovoljno vatrogasno društvo Šestine,52191629788,Šestinski vijenac 2,10000,Zagreb,Podsljeme,sestine@vzgz.hr,014674211,http://www.dvd-sestine.hr,1979,79,predsjednik,Krešimir,Kompesak,0913333133
+7,Dobrovoljno vatrogasno društvo Šestine,52191629788,Šestinski vijenac 2,10000,Zagreb,Podsljeme,sestine@vzgz.hr,014674211,http://www.dvd-sestine.hr,1979,79,zapovjednik,Matija,Ivančević,0911222208
+7,Dobrovoljno vatrogasno društvo Šestine,52191629788,Šestinski vijenac 2,10000,Zagreb,Podsljeme,sestine@vzgz.hr,014674211,http://www.dvd-sestine.hr,1979,79,tajnik,Josip,Tomičić,0989866236
+8,Dobrovoljno vatrogasno društvo Hrašće,06597839139,Trg Jurja Muliha 8,10020,Zagreb,Novi Zagreb - zapad,hrasce@vzgz.hr,016261033,www.dvd-hrasce.hr,1943,450,predsjednik,Krešimir,Kolarić,098273421
+8,Dobrovoljno vatrogasno društvo Hrašće,06597839139,Trg Jurja Muliha 8,10020,Zagreb,Novi Zagreb - zapad,hrasce@vzgz.hr,016261033,www.dvd-hrasce.hr,1943,450,zapovjednik,Marko,Križanić,0916930172
+8,Dobrovoljno vatrogasno društvo Hrašće,06597839139,Trg Jurja Muliha 8,10020,Zagreb,Novi Zagreb - zapad,hrasce@vzgz.hr,016261033,www.dvd-hrasce.hr,1943,450,tajnik,Ivan,Cvetić,0997101217
+9,Dobrovoljno vatrogasno društvo Maksimir,52361209406,Maksimirska 51A/II,10000,Zagreb,Maksimir,maksimir@vzgz.hr,012312016,http://dvd-maksimir.hr,1931,94,predsjednik,Franjo,Kelbas,0916930565
+9,Dobrovoljno vatrogasno društvo Maksimir,52361209406,Maksimirska 51A/II,10000,Zagreb,Maksimir,maksimir@vzgz.hr,012312016,http://dvd-maksimir.hr,1931,94,zapovjednik,Domagoj,Mikša,0912350177
+9,Dobrovoljno vatrogasno društvo Maksimir,52361209406,Maksimirska 51A/II,10000,Zagreb,Maksimir,maksimir@vzgz.hr,012312016,http://dvd-maksimir.hr,1931,94,tajnik,Bojan,Nonković,0989440944
+10,Dobrovoljno vatrogasno društvo Prečko,46319347195,Jarnovićeva ulica 19,10000,Zagreb,Trešnjevka - jug,precko@vzgz.hr,013865010,www.dvdprecko.hr,1978,50,predsjednik,Goran,Ostrički,0976633584
+10,Dobrovoljno vatrogasno društvo Prečko,46319347195,Jarnovićeva ulica 19,10000,Zagreb,Trešnjevka - jug,precko@vzgz.hr,013865010,www.dvdprecko.hr,1978,50,zapovjednik,Renato,Ivačević,0917922130
+10,Dobrovoljno vatrogasno društvo Prečko,46319347195,Jarnovićeva ulica 19,10000,Zagreb,Trešnjevka - jug,precko@vzgz.hr,013865010,www.dvdprecko.hr,1978,50,tajnik,Krunoslav,Šipek,0917922130
