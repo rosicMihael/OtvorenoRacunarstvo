@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/rosicMihael/OtvorenoRacunarstvo/blob/main/shema.json",
   "title": "OR DVD-i",
   "type": "array",
   "description": "Popis DVD-a Vatrogasne zajednice Grada Zagreba",
