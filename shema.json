@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OR DVD-i",
+  "type": "array",
+  "description": "Popis DVD-a Vatrogasne zajednice Grada Zagreba",
+  "items": {
+    "type": "object",
+    "title": "DVD",
+    "description": "Objekt koji sadrži sve podatke o jednom DVD-u",
+    "properties": {
+      "naziv": {
+        "type": "string"
+      },
+      "adresa": {
+        "type": "object",
+        "properties": {
+          "ulica": {
+            "type": "string"
+          },
+          "poštanskiBroj": {
+            "type": "string"
+          },
+          "grad": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ulica",
+          "poštanskiBroj",
+          "grad"
+        ]
+      },
+      "gradska_cetvrt": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "telefon": {
+        "type": "string"
+      },
+      "webStranica": {
+        "type": "string"
+      },
+      "OIB": {
+        "type": "string"
+      },
+      "vodstvo": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "uloga": {
+              "type": "string"
+            },
+            "ime": {
+              "type": "string"
+            },
+            "prezime": {
+              "type": "string"
+            },
+            "kontakt": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "uloga",
+            "ime",
+            "prezime",
+            "kontakt"
+          ]
+        }
+      },
+      "godinaOsnutka": {
+        "type": "number"
+      },
+      "brojČlanova": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "naziv",
+      "adresa",
+      "gradska_cetvrt",
+      "email",
+      "telefon",
+      "webStranica",
+      "OIB",
+      "vodstvo",
+      "godinaOsnutka",
+      "brojČlanova"
+    ]
+  }
+}
