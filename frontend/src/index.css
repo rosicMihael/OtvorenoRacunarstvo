@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.public {
+  margin: 75px;
+}
+
+.navbar {
+  z-index: 1;
+  background-color: #d8d8d8;
+  color: white;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 40px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.tablica {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.tablica th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.tablica th {
+  cursor: pointer;
+}
+
+.th-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.operacije {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.search {
+  margin-left: 20px;
+  display: flex;
+  align-items: end;
+  gap: 5px;
+  flex-flow: column;
+}
+
+.search input {
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 20px;
+  transition: all 0.4s;
+}
+
+.search input:hover {
+  box-shadow: 0px 0px 4px 2px grey;
+}
+
+.gumbi {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px;
+}
+
+.gumbi button {
+  border: 1px solid black;
+  height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.gumbi button:hover {
+  color: white;
+  background-color: black;
+}
+
+.row-count {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 20px;
+}
