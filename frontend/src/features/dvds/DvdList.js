@@ -9,6 +9,13 @@ const DvdList = () => {
   const [selectedField, setSelectedField] = useState("all");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const filterFields = {
+    naziv: "naziv",
+    adresa: ["adresa.ulica", "adresa.postanski_broj", "adresa.grad"],
+    gradskaCetvrt: "gradska_cetvrt",
+    godinaOsnutka: "godina_osnutka",
+    brojClanova: "broj_clanova",
+  };
 
   useEffect(() => {
     axios
@@ -27,21 +34,15 @@ const DvdList = () => {
     }
   };
 
+  function getValue(obj, path) {
+    return path.split(".").reduce((acc, key) => acc?.[key], obj);
+  }
+
   const getSortedData = (data) => {
     if (!sortField) return data;
-    return [...data].sort((a, b) => {
-      let aValue = a;
-      let bValue = b;
-      if (sortField.includes(".")) {
-        const keys = sortField.split(".");
-        for (let key of keys) {
-          aValue = aValue?.[key];
-          bValue = bValue?.[key];
-        }
-      } else {
-        aValue = a?.[sortField];
-        bValue = b?.[sortField];
-      }
+    return data.sort((a, b) => {
+      let aValue = getValue(a, sortField);
+      let bValue = getValue(b, sortField);
       if (typeof aValue === "number" && typeof bValue === "number") {
         return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
       }
@@ -52,15 +53,8 @@ const DvdList = () => {
   };
 
   const renderSortIcon = (field) => {
-    if (sortField !== field) return "⇅";
-    return sortOrder === "asc" ? "▲" : "▼";
-  };
-
-  const filterFields = {
-    naziv: "naziv",
-    adresa: "adresa.ulica",
-    gradskaCetvrt: "gradska_cetvrt",
-    email: "email",
+    if (sortField !== field) return <span>&#10606;</span>;
+    return sortOrder === "asc" ? <span>&#10595;</span> : <span>&#10597;</span>;
   };
 
   const matchesSearch = (obj, search) =>
@@ -70,6 +64,15 @@ const DvdList = () => {
     tableData.filter((dvd) => {
       if (!searchText) return true;
       if (selectedField === "all") return matchesSearch(dvd, searchText);
+      if (selectedField === "adresa") {
+        const keys = filterFields[selectedField];
+        return keys.some((key) => {
+          let current = key.split(".").reduce((o, k) => o[k], dvd);
+          return String(current)
+            .toLowerCase()
+            .includes(searchText.toLowerCase());
+        });
+      }
       const key = filterFields[selectedField];
       const value = key.split(".").reduce((o, k) => o[k], dvd);
       return String(value).toLowerCase().includes(searchText.toLowerCase());
@@ -155,7 +158,8 @@ const DvdList = () => {
             <option value="naziv">Naziv</option>
             <option value="adresa">Adresa</option>
             <option value="gradskaCetvrt">Gradska četvrt</option>
-            <option value="email">Email</option>
+            <option value="godinaOsnutka">Godina osnutka</option>
+            <option value="brojClanova">Broj članova</option>
           </select>
         </div>
         <div className="gumbi">
@@ -169,61 +173,56 @@ const DvdList = () => {
             <th onClick={() => handleSort("naziv")}>
               <div className="th-flex">
                 <span>Naziv</span>
-                <span>{renderSortIcon("naziv")}</span>
+                {renderSortIcon("naziv")}
               </div>
             </th>
-            <th onClick={() => handleSort("adresa")}>
+            <th onClick={() => handleSort("adresa.ulica")}>
               <div className="th-flex">
                 <span>Adresa</span>
-                <span>{renderSortIcon("adresa")}</span>
+                {renderSortIcon("adresa.ulica")}
               </div>
             </th>
             <th onClick={() => handleSort("gradska_cetvrt")}>
               <div className="th-flex">
                 <span>Gradska četvrt</span>
-                <span>{renderSortIcon("gradska_cetvrt")}</span>
+                {renderSortIcon("gradska_cetvrt")}
               </div>
             </th>
-            <th onClick={() => handleSort("email")}>
+            <th>
               <div className="th-flex">
                 <span>Email</span>
-                <span>{renderSortIcon("email")}</span>
               </div>
             </th>
-            <th onClick={() => handleSort("telefon")}>
+            <th>
               <div className="th-flex">
                 <span>Telefon</span>
-                <span>{renderSortIcon("telefon")}</span>
               </div>
             </th>
-            <th onClick={() => handleSort("web_stranica")}>
+            <th>
               <div className="th-flex">
                 <span>Web stranica</span>
-                <span>{renderSortIcon("web_stranica")}</span>
               </div>
             </th>
-            <th onClick={() => handleSort("oib")}>
+            <th>
               <div className="th-flex">
                 <span>OIB</span>
-                <span>{renderSortIcon("oib")}</span>
               </div>
             </th>
             <th onClick={() => handleSort("godina_osnutka")}>
               <div className="th-flex">
                 <span>Godina osnutka</span>
-                <span>{renderSortIcon("godina_osnutka")}</span>
+                {renderSortIcon("godina_osnutka")}
               </div>
             </th>
             <th onClick={() => handleSort("broj_clanova")}>
               <div className="th-flex">
                 <span>Broj članova</span>
-                <span>{renderSortIcon("broj_clanova")}</span>
+                {renderSortIcon("broj_clanova")}
               </div>
             </th>
-            <th onClick={() => handleSort("vodstvo")}>
+            <th>
               <div className="th-flex">
                 <span>Vodstvo</span>
-                <span>{renderSortIcon("vodstvo")}</span>
               </div>
             </th>
           </tr>

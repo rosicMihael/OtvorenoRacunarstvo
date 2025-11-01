@@ -10,18 +10,28 @@
     "description": "Objekt koji sadrži sve podatke o jednom DVD-u",
     "properties": {
       "naziv": {
+        "title": "Naziv DVD-a",
+        "description": "Puni naziv DVD-a",
         "type": "string"
       },
       "adresa": {
         "type": "object",
+        "title": "Adresa DVD-a",
+        "description": "Objekt koji sadrži sve podatke o adresi DVD-a",
         "properties": {
           "ulica": {
+            "title": "Ulica",
+            "description": "Naziv ulice u kojoj se nalazi DVD",
             "type": "string"
           },
           "poštanskiBroj": {
+            "title": "Poštanski broj",
+            "description": "Poštanski broj mjesta gdje se DVD nalazi",
             "type": "string"
           },
           "grad": {
+            "title": "Grad",
+            "description": "Grad u kojem se DVD nalazi",
             "type": "string"
           }
         },
@@ -32,35 +42,57 @@
         ]
       },
       "gradska_cetvrt": {
+        "title": "Gradska četvrt",
+        "description": "Gradska četvrt u kojoj DVD operira",
         "type": "string"
       },
       "email": {
+        "title": "Email",
+        "description": "Kontakt mail DVD-a",
         "type": "string"
       },
       "telefon": {
+        "title": "Telefon",
+        "description": "Kontakt broj DVD-a",
         "type": "string"
       },
       "webStranica": {
+        "title": "Web stranica",
+        "description": "Web stranica DVD-a",
         "type": "string"
       },
       "OIB": {
+        "title": "Oib",
+        "description": "OIB DVD-a",
         "type": "string"
       },
       "vodstvo": {
+        "title": "Vodstvo",
+        "description": "Lista koji sadrži objekte sa podacima o predsjedniku, zapovjedniku i tajniku DVD-a",
         "type": "array",
         "items": {
+          "title": "Član vodstva DVD-a",
+          "description": "Objekt sa podacima o članu vodstva DVD-a",
           "type": "object",
           "properties": {
             "uloga": {
+              "title": "Uloga",
+              "description": "Uloga člana vodstva DVD-a",
               "type": "string"
             },
             "ime": {
+              "title": "Ime",
+              "description": "Ime člana vodstva DVD-a",
               "type": "string"
             },
             "prezime": {
+              "title": "Prezime",
+              "description": "Prezime člana vodstva DVD-a",
               "type": "string"
             },
             "kontakt": {
+              "title": "Kontakt",
+              "description": "Kontakt broj člana vodstva DVD-a",
               "type": "string"
             }
           },
@@ -73,23 +105,24 @@
         }
       },
       "godinaOsnutka": {
+        "title": "Godina osnutka",
+        "description": "Godina u kojoj je DVD počeo djelovati",
         "type": "number"
       },
       "brojČlanova": {
+        "title": "Broj članova",
+        "description": "Broj operativnih i neoperativnih članova DVD-a",
         "type": "number"
       }
     },
     "required": [
       "naziv",
       "adresa",
-      "gradska_cetvrt",
       "email",
       "telefon",
-      "webStranica",
       "OIB",
       "vodstvo",
-      "godinaOsnutka",
-      "brojČlanova"
+      "godinaOsnutka"
     ]
   }
 }
