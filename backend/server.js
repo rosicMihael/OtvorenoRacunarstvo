@@ -16,6 +16,8 @@ app.use("/", require("./routes/root"));
 
 app.use("/datatable", require("./routes/dvdRoutes"));
 
+app.use("/export", require("./routes/exportRoutes"));
+
 app.use((req, res) => {
   res.status(404);
 

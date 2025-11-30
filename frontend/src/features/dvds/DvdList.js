@@ -9,21 +9,19 @@ const DvdList = () => {
   const [selectedField, setSelectedField] = useState("all");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
-  const filterFields = {
-    naziv: "naziv",
-    adresa: ["adresa.ulica", "adresa.postanski_broj", "adresa.grad"],
-    gradskaCetvrt: "gradska_cetvrt",
-    godinaOsnutka: "godina_osnutka",
-    brojClanova: "broj_clanova",
-  };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3500/datatable")
-      .then((res) => setTableData(res.data))
-      .catch((err) => setError(err.message))
-      .finally(() => setIsLoading(false));
-  }, []);
+    const timer = setTimeout(() => {
+      axios
+        .get(
+          `http://localhost:3500/datatable?selectedField=${selectedField}&searchText=${searchText}&sortField=${sortField}&sortOrder=${sortOrder}`
+        )
+        .then((res) => setTableData(res.data))
+        .catch((err) => setError(err.message))
+        .finally(() => setIsLoading(false));
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [selectedField, searchText, sortField, sortOrder]);
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -34,107 +32,9 @@ const DvdList = () => {
     }
   };
 
-  function getValue(obj, path) {
-    return path.split(".").reduce((acc, key) => acc?.[key], obj);
-  }
-
-  const getSortedData = (data) => {
-    if (!sortField) return data;
-    return data.sort((a, b) => {
-      let aValue = getValue(a, sortField);
-      let bValue = getValue(b, sortField);
-      if (typeof aValue === "number" && typeof bValue === "number") {
-        return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
-      }
-      return sortOrder === "asc"
-        ? String(aValue).localeCompare(String(bValue))
-        : String(bValue).localeCompare(String(aValue));
-    });
-  };
-
   const renderSortIcon = (field) => {
     if (sortField !== field) return <span>&#10606;</span>;
     return sortOrder === "asc" ? <span>&#10595;</span> : <span>&#10597;</span>;
-  };
-
-  const matchesSearch = (obj, search) =>
-    JSON.stringify(obj).toLowerCase().includes(search.toLowerCase());
-
-  const filteredData = getSortedData(
-    tableData.filter((dvd) => {
-      if (!searchText) return true;
-      if (selectedField === "all") return matchesSearch(dvd, searchText);
-      if (selectedField === "adresa") {
-        const keys = filterFields[selectedField];
-        return keys.some((key) => {
-          let current = key.split(".").reduce((o, k) => o[k], dvd);
-          return String(current)
-            .toLowerCase()
-            .includes(searchText.toLowerCase());
-        });
-      }
-      const key = filterFields[selectedField];
-      const value = key.split(".").reduce((o, k) => o[k], dvd);
-      return String(value).toLowerCase().includes(searchText.toLowerCase());
-    })
-  );
-
-  const downloadJSON = () => {
-    const blob = new Blob([JSON.stringify(filteredData, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "dvd.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const downloadCSV = () => {
-    const headers = [
-      "Naziv",
-      "Adresa",
-      "Gradska četvrt",
-      "Email",
-      "Telefon",
-      "Web stranica",
-      "OIB",
-      "Godina osnutka",
-      "Broj članova",
-      "Vodstvo",
-    ];
-
-    const csvRows = [
-      headers.join(","),
-      filteredData.map((dvd) => {
-        const row = [
-          dvd.naziv,
-          `${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`,
-          dvd.gradska_cetvrt,
-          dvd.email,
-          dvd.telefon,
-          dvd.web_stranica,
-          dvd.oib,
-          dvd.godina_osnutka,
-          dvd.broj_clanova,
-          dvd.vodstvo
-            .map((v) => `${v.uloga}: ${v.ime} ${v.prezime} (${v.kontakt})`)
-            .join(", "),
-        ];
-        return row.map((cell) => `"${String(cell)}"`).join(",");
-      }),
-    ];
-
-    const blob = new Blob([csvRows.join("\n")], {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "dvd.csv";
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   if (isLoading) return <p>Učitavanje DVD-a...</p>;
@@ -163,8 +63,12 @@ const DvdList = () => {
           </select>
         </div>
         <div className="gumbi">
-          <button onClick={downloadCSV}>Preuzmi CSV</button>
-          <button onClick={downloadJSON}>Preuzmi JSON</button>
+          <a href="http://localhost:3500/export/csv" download>
+            <button>Preuzmi CSV</button>
+          </a>
+          <a href="http://localhost:3500/export/json" download>
+            <button>Preuzmi JSON</button>
+          </a>
         </div>
       </div>
       <table className="tablica">
@@ -228,7 +132,7 @@ const DvdList = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((dvd, index) => (
+          {tableData.map((dvd, index) => (
             <tr key={index}>
               <td>{dvd.naziv}</td>
               <td>{`${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`}</td>
@@ -250,7 +154,7 @@ const DvdList = () => {
           ))}
         </tbody>
       </table>
-      <p className="row-count">Broj redaka: {filteredData.length}</p>
+      <p className="row-count">Broj redaka: {tableData.length}</p>
     </div>
   );
 };
