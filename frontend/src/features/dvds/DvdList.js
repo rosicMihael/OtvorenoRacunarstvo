@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import ExportButtons from "../../components/ExportButtons";
 
 const DvdList = () => {
   const [tableData, setTableData] = useState([]);
@@ -9,19 +10,22 @@ const DvdList = () => {
   const [selectedField, setSelectedField] = useState("all");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [queryParams, setQueryParams] = useState({});
+
+  useEffect(() => {
+    setQueryParams({ selectedField, searchText, sortField, sortOrder });
+  }, [selectedField, searchText, sortField, sortOrder]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       axios
-        .get(
-          `http://localhost:3500/datatable?selectedField=${selectedField}&searchText=${searchText}&sortField=${sortField}&sortOrder=${sortOrder}`
-        )
+        .get("http://localhost:3500/datatable", { params: queryParams })
         .then((res) => setTableData(res.data))
         .catch((err) => setError(err.message))
         .finally(() => setIsLoading(false));
     }, 500);
     return () => clearTimeout(timer);
-  }, [selectedField, searchText, sortField, sortOrder]);
+  }, [queryParams]);
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -37,8 +41,8 @@ const DvdList = () => {
     return sortOrder === "asc" ? <span>&#10595;</span> : <span>&#10597;</span>;
   };
 
-  if (isLoading) return <p>Učitavanje DVD-a...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (isLoading) return <p className="loader">Učitavanje DVD-a...</p>;
+  if (error) return <p className="error">Error: {error}</p>;
 
   return (
     <div>
@@ -62,14 +66,7 @@ const DvdList = () => {
             <option value="brojClanova">Broj članova</option>
           </select>
         </div>
-        <div className="gumbi">
-          <a href="http://localhost:3500/export/csv" download>
-            <button>Preuzmi CSV</button>
-          </a>
-          <a href="http://localhost:3500/export/json" download>
-            <button>Preuzmi JSON</button>
-          </a>
-        </div>
+        <ExportButtons params={queryParams} />
       </div>
       <table className="tablica">
         <thead>
@@ -80,16 +77,16 @@ const DvdList = () => {
                 {renderSortIcon("naziv")}
               </div>
             </th>
-            <th onClick={() => handleSort("adresa.ulica")}>
+            <th onClick={() => handleSort("adresa")}>
               <div className="th-flex">
                 <span>Adresa</span>
-                {renderSortIcon("adresa.ulica")}
+                {renderSortIcon("adresa")}
               </div>
             </th>
-            <th onClick={() => handleSort("gradska_cetvrt")}>
+            <th onClick={() => handleSort("gradskaCetvrt")}>
               <div className="th-flex">
                 <span>Gradska četvrt</span>
-                {renderSortIcon("gradska_cetvrt")}
+                {renderSortIcon("gradskaCetvrt")}
               </div>
             </th>
             <th>
@@ -112,16 +109,16 @@ const DvdList = () => {
                 <span>OIB</span>
               </div>
             </th>
-            <th onClick={() => handleSort("godina_osnutka")}>
+            <th onClick={() => handleSort("godinaOsnutka")}>
               <div className="th-flex">
                 <span>Godina osnutka</span>
-                {renderSortIcon("godina_osnutka")}
+                {renderSortIcon("godinaOsnutka")}
               </div>
             </th>
-            <th onClick={() => handleSort("broj_clanova")}>
+            <th onClick={() => handleSort("brojClanova")}>
               <div className="th-flex">
                 <span>Broj članova</span>
-                {renderSortIcon("broj_clanova")}
+                {renderSortIcon("brojClanova")}
               </div>
             </th>
             <th>

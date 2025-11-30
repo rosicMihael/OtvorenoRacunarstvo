@@ -1,3 +1,5 @@
+import ExportButtons from "./ExportButtons";
+
 const Public = () => {
   return (
     <div className="public">
@@ -46,6 +48,7 @@ const Public = () => {
           otvoreno dostupni.
         </p>
       </div>
+      <ExportButtons />
     </div>
   );
 };
