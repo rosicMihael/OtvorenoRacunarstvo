@@ -121,3 +121,143 @@ td {
   font-weight: bold;
   margin-left: 20px;
 }
+
+.dvd-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.dvd-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dvd-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.dvd-section {
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.dvd-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.dvd-list {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.alert-box {
+  background: #fff;
+  padding: 20px 28px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.25s ease;
+}
+
+.alert-error {
+  border: 6px solid #dc3545;
+}
+
+.alert-message {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.alert-button {
+  padding: 8px 16px;
+  border: none;
+  background: #333;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.alert-button:hover {
+  background: #555;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.nf-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+  background: #f8f9fa;
+  padding: 20px;
+}
+
+.nf-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #dc3545;
+}
+
+.nf-text {
+  font-size: 1.25rem;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+.nf-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.nf-button:hover {
+  background-color: black;
+  color: white;
+}

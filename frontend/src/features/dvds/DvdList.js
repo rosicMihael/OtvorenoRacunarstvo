@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import ExportButtons from "../../components/ExportButtons";
+import { Link } from "react-router-dom";
 
 const DvdList = () => {
   const [tableData, setTableData] = useState([]);
@@ -126,6 +127,11 @@ const DvdList = () => {
                 <span>Vodstvo</span>
               </div>
             </th>
+            <th>
+              <div className="th-flex">
+                <span>Detalji</span>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -146,6 +152,9 @@ const DvdList = () => {
                     (v) => `${v.uloga}: ${v.ime} ${v.prezime} (${v.kontakt})`
                   )
                   .join(", ")}
+              </td>
+              <td>
+                <Link to={`/dvd/${dvd.dvd_id}`}>Pogledaj detalje</Link>
               </td>
             </tr>
           ))}

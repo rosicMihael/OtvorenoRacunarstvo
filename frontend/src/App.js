@@ -3,6 +3,8 @@ import Public from "./components/Public";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
 import DvdList from "./features/dvds/DvdList";
+import Dvd from "./features/dvds/Dvd";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
       <Route path="/*" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="datatable" element={<DvdList />} />
+        <Route path="dvd/:id" element={<Dvd />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
