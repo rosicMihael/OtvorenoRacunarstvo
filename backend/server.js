@@ -14,9 +14,7 @@ app.use(express.static("public"));
 
 app.use("/", require("./routes/root"));
 
-app.use("/datatable", require("./routes/datatableRoutes"));
-
-app.use("/dvd", require("./routes/dvdRoutes"));
+app.use("/dvdi", require("./routes/dvdRoutes"));
 
 app.use("/export", require("./routes/exportRoutes"));
 

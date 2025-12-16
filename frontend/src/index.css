@@ -48,6 +48,11 @@ body {
   text-decoration: underline;
 }
 
+.navLinksRight {
+  display: flex;
+  gap: 15px;
+}
+
 .tablica {
   width: 100%;
   border-collapse: collapse;
@@ -59,6 +64,20 @@ td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
+}
+
+.tablica-detalji {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.tablica-detalji a {
+  text-decoration: none;
+  color: black;
+}
+
+.tablica-detalji a:hover {
+  text-decoration: underline;
 }
 
 .tablica th {
@@ -78,6 +97,21 @@ td {
   height: 70px;
 }
 
+.filterPage {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+}
+
+.filterPage a {
+  text-decoration: none;
+  color: black;
+}
+
+.filterPage a:hover {
+  text-decoration: underline;
+}
+
 .search {
   margin-left: 20px;
   display: flex;
@@ -95,6 +129,13 @@ td {
 
 .search input:hover {
   box-shadow: 0px 0px 4px 2px grey;
+}
+
+.search select {
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 20px;
 }
 
 .gumbi {
@@ -159,6 +200,15 @@ td {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 6px;
+}
+
+.dvd-section a {
+  color: black;
+  text-decoration: none;
+}
+
+.dvd-section a:hover {
+  text-decoration: underline;
 }
 
 .dvd-list {

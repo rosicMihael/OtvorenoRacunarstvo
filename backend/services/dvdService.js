@@ -88,4 +88,4 @@ const getDvdsData = async ({
   return result.rows;
 };
 
-module.exports = getDvdsData;
+module.exports = { getDvdsData };

@@ -4,7 +4,10 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Link to="/">Naslovna stranica</Link>
-      <Link to="/datatable">Lista DVD-a</Link>
+      <div className="navLinksRight">
+        <Link to="/dvdi">Lista DVD-a</Link>
+        <Link to="/dvdi/new">Dodaj novi DVD</Link>
+      </div>
     </nav>
   );
 };

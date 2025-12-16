@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const dvdController = require("../controllers/dvdController");
 
-router.route("/:id").get(dvdController.getDvd);
+router.route("/").get(dvdController.getDvds);
+router.route("/gradska_cetvrt").get(dvdController.getCitySquares);
+router.route("/email").get(dvdController.getEmails);
+router.route("/web_stranica").get(dvdController.getWebPages);
+router.route("/id/:id").get(dvdController.getDvd);
 
 module.exports = router;

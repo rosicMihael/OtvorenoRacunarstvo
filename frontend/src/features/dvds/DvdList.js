@@ -1,7 +1,8 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import ExportButtons from "../../components/ExportButtons";
 import { Link } from "react-router-dom";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import api from "../../api/api";
 
 const DvdList = () => {
   const [tableData, setTableData] = useState([]);
@@ -19,10 +20,10 @@ const DvdList = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      axios
-        .get("http://localhost:3500/datatable", { params: queryParams })
-        .then((res) => setTableData(res.data))
-        .catch((err) => setError(err.message))
+      api
+        .get("/dvdi", { params: queryParams })
+        .then((response) => setTableData(response.data.response))
+        .catch((error) => setError(error.response.message))
         .finally(() => setIsLoading(false));
     }, 500);
     return () => clearTimeout(timer);
@@ -54,10 +55,15 @@ const DvdList = () => {
             placeholder="Pretraži..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            title="search-input"
+            name="search-input"
+            id="search-input"
           />
           <select
             value={selectedField}
             onChange={(e) => setSelectedField(e.target.value)}
+            title="select-filter"
+            name="select-filter"
           >
             <option value="all">Sve</option>
             <option value="naziv">Naziv</option>
@@ -66,6 +72,18 @@ const DvdList = () => {
             <option value="godinaOsnutka">Godina osnutka</option>
             <option value="brojClanova">Broj članova</option>
           </select>
+        </div>
+        <div className="filterPage">
+          <span>Lista gradskih četvrti: </span>
+          <Link to="/dvdi/gradska_cetvrt">Pogledaj&rarr;</Link>
+        </div>
+        <div className="filterPage">
+          <span>Lista mailova: </span>
+          <Link to="/dvdi/email">Pogledaj&rarr;</Link>
+        </div>
+        <div className="filterPage">
+          <span>Lista web stranica: </span>
+          <Link to="/dvdi/web_stranica">Pogledaj&rarr;</Link>
         </div>
         <ExportButtons params={queryParams} />
       </div>
@@ -153,8 +171,10 @@ const DvdList = () => {
                   )
                   .join(", ")}
               </td>
-              <td>
-                <Link to={`/dvd/${dvd.dvd_id}`}>Pogledaj detalje</Link>
+              <td className="tablica-detalji">
+                <Link to={`/dvdi/id/${dvd.dvd_id}`}>
+                  <FaArrowUpRightFromSquare />
+                </Link>
               </td>
             </tr>
           ))}

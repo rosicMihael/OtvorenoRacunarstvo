@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import AlertPopUp from "../../components/AlertPopUp";
+import api from "../../api/api";
 
 const Dvd = () => {
   const { id } = useParams();
@@ -11,10 +11,10 @@ const Dvd = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3500/dvd/" + id)
+    api
+      .get(`/dvdi/id/${id}`)
       .then((response) => {
-        setDvd(response.data.data);
+        setDvd(response.data.response);
         setError(null);
       })
       .catch((error) => {
@@ -35,10 +35,6 @@ const Dvd = () => {
 
   if (error) {
     return <AlertPopUp status={error.status} message={error.message} />;
-  }
-
-  if (!dvd) {
-    return <p>Dvd nije pronađen.</p>;
   }
 
   return (
