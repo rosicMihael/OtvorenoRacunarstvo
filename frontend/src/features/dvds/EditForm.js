@@ -15,7 +15,7 @@ const EditForm = () => {
 
   useEffect(() => {
     api
-      .get(`/dvdi/id/${id}`)
+      .get(`/dvdi/${id}`)
       .then((response) => {
         setFormData(response.data.response);
       })
@@ -27,7 +27,7 @@ const EditForm = () => {
       })
       .finally(() => setLoadingDvd(false));
     api
-      .get(`/dvdi/gradska_cetvrt`)
+      .get(`/dvdi/gradske_cetvrti`)
       .then((response) => {
         setQuarters(response.data.response);
       })
@@ -69,7 +69,7 @@ const EditForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     api
-      .patch(`/dvdi/uredi/${id}`, formData)
+      .put(`/dvdi/${id}`, formData)
       .then((response) => {
         console.log(response.data.status);
         console.log(response.data.message);

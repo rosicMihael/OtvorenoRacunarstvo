@@ -55,9 +55,7 @@ const CreateForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     api
-      .post("/dvdi/novi", {
-        formData,
-      })
+      .post("/dvdi", formData)
       .then((response) => {
         console.log(response.data.status);
         console.log(response.data.message);

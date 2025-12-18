@@ -19,11 +19,11 @@ function App() {
         <Route path="dvdi">
           <Route index element={<DvdList />} />
           <Route path="id/:id" element={<Dvd />} />
-          <Route path="gradska_cetvrt" element={<CitySquareList />} />
-          <Route path="email" element={<EmailList />} />
-          <Route path="web_stranica" element={<WebPageList />} />
+          <Route path="gradske_cetvrti" element={<CitySquareList />} />
+          <Route path="emailovi" element={<EmailList />} />
+          <Route path="web_stranice" element={<WebPageList />} />
           <Route path="novi" element={<CreateForm />} />
-          <Route path="uredi/:id" element={<EditForm />} />
+          <Route path="edit/:id" element={<EditForm />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

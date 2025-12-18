@@ -10,7 +10,7 @@ const EmailList = () => {
 
   useEffect(() => {
     api
-      .get(`/dvdi/email`)
+      .get(`/dvdi/emailovi`)
       .then((response) => {
         setEmails(response.data.response);
         setError(null);

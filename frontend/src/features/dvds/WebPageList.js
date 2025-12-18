@@ -10,7 +10,7 @@ const WebPageList = () => {
 
   useEffect(() => {
     api
-      .get(`/dvdi/web_stranica`)
+      .get(`/dvdi/web_stranice`)
       .then((response) => {
         setWebPages(response.data.response);
         setError(null);

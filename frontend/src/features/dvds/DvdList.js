@@ -75,15 +75,15 @@ const DvdList = () => {
         </div>
         <div className="filterPage">
           <span>Lista gradskih četvrti: </span>
-          <Link to="/dvdi/gradska_cetvrt">Pogledaj&rarr;</Link>
+          <Link to="/dvdi/gradske_cetvrti">Pogledaj&rarr;</Link>
         </div>
         <div className="filterPage">
           <span>Lista mailova: </span>
-          <Link to="/dvdi/email">Pogledaj&rarr;</Link>
+          <Link to="/dvdi/emailovi">Pogledaj&rarr;</Link>
         </div>
         <div className="filterPage">
           <span>Lista web stranica: </span>
-          <Link to="/dvdi/web_stranica">Pogledaj&rarr;</Link>
+          <Link to="/dvdi/web_stranice">Pogledaj&rarr;</Link>
         </div>
         <ExportButtons params={queryParams} />
       </div>

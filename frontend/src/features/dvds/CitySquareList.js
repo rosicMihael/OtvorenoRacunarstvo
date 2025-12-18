@@ -10,7 +10,7 @@ const CitySquareList = () => {
 
   useEffect(() => {
     api
-      .get(`/dvdi/gradska_cetvrt`)
+      .get(`/dvdi/gradske_cetvrti`)
       .then((response) => {
         setCitySquare(response.data.response);
         setError(null);

@@ -86,7 +86,7 @@ const getDvd = asyncHandler(async (req, res) => {
 });
 
 // @desc dohvati sve gradske četvrti koje su pokrivene
-// @route GET /dvdi/gradska_cetvrt/
+// @route GET /dvdi/gradske_cetvrti/
 
 const getCitySquares = asyncHandler(async (req, res) => {
   const query = `
@@ -112,7 +112,7 @@ const getCitySquares = asyncHandler(async (req, res) => {
 });
 
 // @desc dohvati sve emailove DVD-a
-// @route GET /dvdi/email
+// @route GET /dvdi/emailovi
 
 const getEmails = asyncHandler(async (req, res) => {
   const query = `
@@ -138,7 +138,7 @@ const getEmails = asyncHandler(async (req, res) => {
 });
 
 // @desc dohvati sve web stranice DVD-a
-// @route GET /dvdi/web_stranica
+// @route GET /dvdi/web_stranice
 
 const getWebPages = asyncHandler(async (req, res) => {
   const query = `
@@ -164,10 +164,10 @@ const getWebPages = asyncHandler(async (req, res) => {
 });
 
 // @desc dodaj novi DVD u bazu
-// @route POST /dvdi/novi
+// @route POST /dvdi
 
 const createDvd = asyncHandler(async (req, res) => {
-  const { formData } = req.body;
+  const formData = req.body;
 
   try {
     await pool.query("BEGIN");
@@ -203,17 +203,18 @@ const createDvd = asyncHandler(async (req, res) => {
 
     await pool.query("COMMIT");
 
-    res.status(200).json({
+    res.status(201).json({
       status: "OK",
       message: "DVD created!",
     });
   } catch (error) {
     await pool.query("ROLLBACK");
-    res
-      .status(500)
-      .send({ status: "DATABASE ERROR", message: "DVD not created!" });
+    res.status(500).send({ status: "DATABASE ERROR", message: error.message });
   }
 });
+
+// @desc obrisi DVD
+// @route POST /dvdi/:id
 
 const deleteDvd = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -243,14 +244,12 @@ const deleteDvd = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     await pool.query("ROLLBACK");
-    res
-      .status(500)
-      .send({ status: "DATABASE ERROR", message: "DVD not deleted!" });
+    res.status(500).send({ status: "DATABASE ERROR", message: error.message });
   }
 });
 
 // @desc uredi postojeci DVD
-// @route PATCH /dvdi/edit/:id
+// @route PATCH /dvdi/:id
 
 const editDvd = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -284,9 +283,7 @@ const editDvd = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     await pool.query("ROLLBACK");
-    res
-      .status(500)
-      .send({ status: "DATABASE ERROR", message: "DVD not edited!" });
+    res.status(500).send({ status: "DATABASE ERROR", message: error.message });
   }
 });
 

@@ -14,7 +14,7 @@ const Dvd = () => {
 
   useEffect(() => {
     api
-      .get(`/dvdi/id/${id}`)
+      .get(`/dvdi/${id}`)
       .then((response) => {
         console.log(response.data.status);
         console.log(response.data.message);
@@ -36,7 +36,7 @@ const Dvd = () => {
 
   const onDeleteClicked = () => {
     api
-      .delete(`/dvdi/id/${id}`)
+      .delete(`/dvdi/${id}`)
       .then((response) => {
         console.log(response.data.status);
         console.log(response.data.message);
@@ -70,7 +70,7 @@ const Dvd = () => {
         >
           <FaTrashCan size={20} />
         </button>
-        <Link to={`/dvdi/uredi/${id}`} className="edit-btn" title="Uredi DVD">
+        <Link to={`/dvdi/edit/${id}`} className="edit-btn" title="Uredi DVD">
           <FaPenToSquare size={20} />
         </Link>
       </div>
