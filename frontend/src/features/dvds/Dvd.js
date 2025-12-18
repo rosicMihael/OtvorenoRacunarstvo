@@ -1,10 +1,12 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AlertPopUp from "../../components/AlertPopUp";
 import api from "../../api/api";
+import { FaTrashCan } from "react-icons/fa6";
 
 const Dvd = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [dvd, setDvd] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,10 +16,13 @@ const Dvd = () => {
     api
       .get(`/dvdi/id/${id}`)
       .then((response) => {
+        console.log(response.data.status);
+        console.log(response.data.message);
         setDvd(response.data.response);
         setError(null);
       })
       .catch((error) => {
+        console.error(error.response.data.status);
         console.error(error.response.data.message);
         setError({
           status: error.response.data.status,
@@ -29,6 +34,23 @@ const Dvd = () => {
       });
   }, [id]);
 
+  const onDeleteClicked = () => {
+    api
+      .delete(`/dvdi/id/${id}`)
+      .then((response) => {
+        console.log(response.data.status);
+        console.log(response.data.message);
+        navigate("/dvdi");
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        setError({
+          status: error.response.data.status,
+          message: error.response.data.message,
+        });
+      });
+  };
+
   if (loading) {
     return <p>Učitavanje detalja DVD-a...</p>;
   }
@@ -39,6 +61,14 @@ const Dvd = () => {
 
   return (
     <div className="dvd-container">
+      <button
+        title="Izbriši DVD"
+        type="button"
+        onClick={onDeleteClicked}
+        className="delete-btn"
+      >
+        <FaTrashCan size={20} />
+      </button>
       <h1 className="dvd-title">{dvd.naziv}</h1>
 
       <div className="dvd-card">

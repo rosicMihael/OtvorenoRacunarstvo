@@ -21,7 +21,7 @@ function App() {
           <Route path="gradska_cetvrt" element={<CitySquareList />} />
           <Route path="email" element={<EmailList />} />
           <Route path="web_stranica" element={<WebPageList />} />
-          <Route path="new" element={<CreateForm />} />
+          <Route path="novi" element={<CreateForm />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

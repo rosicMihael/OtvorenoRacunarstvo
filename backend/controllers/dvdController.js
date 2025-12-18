@@ -1,5 +1,11 @@
 const asyncHandler = require("express-async-handler");
-const { getDvdsData, getDataByField } = require("../services/dvdService");
+const {
+  getDvdsData,
+  getOrCreateQuarter,
+  insertAddress,
+  insertDvd,
+  insertVodstvo,
+} = require("../services/dvdService");
 const { pool } = require("../config/dbConn");
 
 // @desc dohvati sve dvd-e
@@ -152,4 +158,98 @@ const getWebPages = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getDvds, getDvd, getCitySquares, getEmails, getWebPages };
+// @desc dodaj novi DVD u bazu
+// @route POST /dvdi/novi
+
+const createDvd = asyncHandler(async (req, res) => {
+  const { formData } = req.body;
+
+  try {
+    await pool.query("BEGIN");
+
+    const quarter = formData.gradska_cetvrt;
+    const quarterId = await getOrCreateQuarter(quarter);
+
+    const address = formData.adresa;
+    const addressId = await insertAddress(address);
+
+    const dvdData = {
+      naziv: formData.naziv,
+      oib: formData.oib,
+      adresa_id: addressId,
+      gradska_cetvrt_id: quarterId,
+      email: formData.email,
+      telefon: formData.telefon,
+      web_stranica: formData.web_stranica,
+      godina_osnutka: formData.godina_osnutka,
+      broj_clanova: formData.broj_clanova,
+    };
+
+    const dvdId = await insertDvd(dvdData);
+
+    const vodstvoData = {
+      dvd_id: dvdId,
+      predsjednik: formData.vodstvo.predsjednik,
+      zapovjednik: formData.vodstvo.zapovjednik,
+      tajnik: formData.vodstvo.tajnik,
+    };
+
+    await insertVodstvo(vodstvoData);
+
+    await pool.query("COMMIT");
+
+    res.status(200).json({
+      status: "OK",
+      message: "DVD created!",
+    });
+  } catch (error) {
+    await pool.query("ROLLBACK");
+    res
+      .status(500)
+      .send({ status: "DATABASE ERROR", message: "DVD not created!" });
+  }
+});
+
+const deleteDvd = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query("BEGIN");
+
+    await pool.query(`DELETE FROM vodstvo WHERE dvd_id = $1`, [id]);
+
+    const { rows } = await pool.query(
+      `SELECT adresa_id FROM dvd WHERE dvd_id = $1`,
+      [id]
+    );
+    const addressId = rows[0]?.adresa_id;
+
+    await pool.query(`DELETE FROM dvd WHERE dvd_id = $1`, [id]);
+
+    if (addressId) {
+      await pool.query(`DELETE FROM adresa WHERE adresa_id = $1`, [addressId]);
+    }
+
+    await pool.query("COMMIT");
+
+    res.status(200).json({
+      status: "OK",
+      message: "DVD deleted!",
+    });
+  } catch (error) {
+    await pool.query("ROLLBACK");
+    res
+      .status(500)
+      .send({ status: "DATABASE ERROR", message: "DVD not deleted!" });
+  }
+});
+
+module.exports = {
+  getDvds,
+  getDvd,
+  getCitySquares,
+  getEmails,
+  getWebPages,
+  createDvd,
+  deleteDvd,
+};

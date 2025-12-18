@@ -6,7 +6,7 @@ const Navbar = () => {
       <Link to="/">Naslovna stranica</Link>
       <div className="navLinksRight">
         <Link to="/dvdi">Lista DVD-a</Link>
-        <Link to="/dvdi/new">Dodaj novi DVD</Link>
+        <Link to="/dvdi/novi">Dodaj novi DVD</Link>
       </div>
     </nav>
   );

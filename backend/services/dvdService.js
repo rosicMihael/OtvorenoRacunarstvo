@@ -88,4 +88,101 @@ const getDvdsData = async ({
   return result.rows;
 };
 
-module.exports = { getDvdsData };
+const getOrCreateQuarter = async (naziv) => {
+  const quarter = await pool.query(
+    `SELECT gradska_cetvrt_id FROM gradska_cetvrt WHERE naziv = $1;`,
+    [naziv]
+  );
+
+  if (quarter.rows.length > 0) {
+    return quarter.rows[0].gradska_cetvrt_id;
+  }
+
+  const newQuarter = await pool.query(
+    `INSERT INTO gradska_cetvrt (naziv)
+     VALUES ($1)
+     RETURNING gradska_cetvrt_id`,
+    [naziv]
+  );
+
+  return newQuarter.rows[0].gradska_cetvrt_id;
+};
+
+const insertAddress = async (address) => {
+  const { ulica, postanski_broj, grad } = address;
+
+  const query = `INSERT INTO adresa (ulica, postanski_broj,  grad)
+  VALUES ($1, $2, $3)
+  RETURNING adresa_id`;
+
+  const newAddress = await pool.query(query, [ulica, postanski_broj, grad]);
+
+  return newAddress.rows[0].adresa_id;
+};
+
+const insertDvd = async (dvdData) => {
+  const {
+    naziv,
+    oib,
+    adresa_id,
+    gradska_cetvrt_id,
+    email,
+    telefon,
+    web_stranica,
+    godina_osnutka,
+    broj_clanova,
+  } = dvdData;
+
+  const newDvd = await pool.query(
+    `
+    INSERT INTO dvd (naziv, oib, adresa_id, gradska_cetvrt_id, email, telefon, web_stranica, godina_osnutka, broj_clanova)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+    RETURNING dvd_id
+    `,
+    [
+      naziv,
+      oib,
+      adresa_id,
+      gradska_cetvrt_id,
+      email,
+      telefon,
+      web_stranica,
+      godina_osnutka,
+      broj_clanova,
+    ]
+  );
+  return newDvd.rows[0].dvd_id;
+};
+
+const insertVodstvo = async (vodstvoData) => {
+  const { dvd_id, predsjednik, zapovjednik, tajnik } = vodstvoData;
+
+  const query = `
+    INSERT INTO vodstvo (dvd_id, uloga, ime, prezime, kontakt)
+    VALUES
+      ($1, 'predsjednik', $2, $3, $4),
+      ($1, 'zapovjednik', $5, $6, $7),
+      ($1, 'tajnik', $8, $9, $10)
+  `;
+
+  await pool.query(query, [
+    dvd_id,
+    predsjednik.ime,
+    predsjednik.prezime,
+    predsjednik.kontakt,
+    zapovjednik.ime,
+    zapovjednik.prezime,
+    zapovjednik.kontakt,
+    tajnik.ime,
+    tajnik.prezime,
+    tajnik.kontakt,
+  ]);
+};
+
+module.exports = {
+  getDvdsData,
+  getOrCreateQuarter,
+  insertAddress,
+  insertDvd,
+  insertVodstvo,
+};
