@@ -179,10 +179,91 @@ const insertVodstvo = async (vodstvoData) => {
   ]);
 };
 
+const updateDvd = async (
+  id,
+  naziv,
+  oib,
+  adresa_id,
+  gradska_cetvrt_id,
+  email,
+  telefon,
+  web_stranica,
+  godina_osnutka,
+  broj_clanova
+) => {
+  const query = `
+  UPDATE dvd
+      SET
+        naziv = $1,
+        oib = $2,
+        adresa_id = $3,
+        gradska_cetvrt_id = $4,
+        email = $5,
+        telefon = $6,
+        web_stranica = $7,
+        godina_osnutka = $8,
+        broj_clanova = $9
+      WHERE dvd_id = $10;
+    `;
+
+  await pool.query(query, [
+    naziv,
+    oib,
+    adresa_id,
+    gradska_cetvrt_id,
+    email,
+    telefon,
+    web_stranica,
+    godina_osnutka,
+    broj_clanova,
+    id,
+  ]);
+};
+
+const updateAddress = async (adresa) => {
+  const { adresa_id, ulica, postanski_broj, grad } = adresa;
+
+  const query = `
+      UPDATE adresa
+      SET ulica = $1, postanski_broj = $2, grad = $3
+      WHERE adresa_id = $4;
+    `;
+
+  await pool.query(query, [ulica, postanski_broj, grad, adresa_id]);
+};
+
+const updateVodstvo = async (id, vodstvo) => {
+  await pool.query(`DELETE FROM vodstvo WHERE dvd_id = $1`, [id]);
+
+  const query = `
+      INSERT INTO vodstvo (dvd_id, uloga, ime, prezime, kontakt)
+      VALUES
+        ($1, 'predsjednik', $2, $3, $4),
+        ($1, 'zapovjednik', $5, $6, $7),
+        ($1, 'tajnik', $8, $9, $10)
+    `;
+
+  await pool.query(query, [
+    id,
+    vodstvo.predsjednik.ime,
+    vodstvo.predsjednik.prezime,
+    vodstvo.predsjednik.kontakt,
+    vodstvo.zapovjednik.ime,
+    vodstvo.zapovjednik.prezime,
+    vodstvo.zapovjednik.kontakt,
+    vodstvo.tajnik.ime,
+    vodstvo.tajnik.prezime,
+    vodstvo.tajnik.kontakt,
+  ]);
+};
+
 module.exports = {
   getDvdsData,
   getOrCreateQuarter,
   insertAddress,
   insertDvd,
   insertVodstvo,
+  updateDvd,
+  updateAddress,
+  updateVodstvo,
 };

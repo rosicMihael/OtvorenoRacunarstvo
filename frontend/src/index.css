@@ -179,13 +179,22 @@ td {
   padding: 24px;
 }
 
-.delete-btn {
+.dvd-delete-edit-buttons {
   position: absolute;
   top: 50px;
   right: 80px;
   width: 42px;
   height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-btn,
+.edit-btn {
   border: none;
+  color: black;
   cursor: pointer;
 }
 
@@ -360,13 +369,18 @@ td {
   width: 500px;
 }
 
-.form input {
+.form input,
+select {
   width: 100%;
   padding: 0.6rem 0.8rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
+}
+
+.form select {
+  cursor: pointer;
 }
 
 .form-adresa,

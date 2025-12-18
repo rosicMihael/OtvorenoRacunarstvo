@@ -8,6 +8,7 @@ import CitySquareList from "./features/dvds/CitySquareList";
 import EmailList from "./features/dvds/EmailList";
 import WebPageList from "./features/dvds/WebPageList";
 import CreateForm from "./features/dvds/CreateForm";
+import EditForm from "./features/dvds/EditForm";
 import NotFound from "./components/NotFound";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="email" element={<EmailList />} />
           <Route path="web_stranica" element={<WebPageList />} />
           <Route path="novi" element={<CreateForm />} />
+          <Route path="uredi/:id" element={<EditForm />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

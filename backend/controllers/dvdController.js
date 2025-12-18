@@ -5,6 +5,9 @@ const {
   insertAddress,
   insertDvd,
   insertVodstvo,
+  updateDvd,
+  updateAddress,
+  updateVodstvo,
 } = require("../services/dvdService");
 const { pool } = require("../config/dbConn");
 
@@ -32,38 +35,40 @@ const getDvds = asyncHandler(async (req, res) => {
 const getDvd = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const query = `
-    SELECT
-      d.dvd_id,
-      d.naziv,
-      json_build_object(
-        'ulica', a.ulica,
-        'postanski_broj', a.postanski_broj,
-        'grad', a.grad
-      ) AS adresa,
-      g.naziv AS gradska_cetvrt,
-      d.email,
-      d.telefon,
-      d.web_stranica,
-      d.oib AS OIB,
-      (
-        SELECT json_agg(
-          json_build_object(
-            'uloga', v.uloga,
-            'ime', v.ime,
-            'prezime', v.prezime,
-            'kontakt', v.kontakt
-          )
-          ORDER BY v.vodstvo_id
+   SELECT
+   d.naziv,
+   json_build_object(
+      'adresa_id', a.adresa_id,
+      'ulica', a.ulica,
+      'postanski_broj', a.postanski_broj,
+      'grad', a.grad
+   ) AS adresa,
+   json_build_object(
+    'gradska_cetvrt_id', g.gradska_cetvrt_id,
+    'naziv', g.naziv
+   ) AS gradska_cetvrt,
+    d.email,
+    d.telefon,
+    d.web_stranica,
+    d.oib AS OIB,
+    (
+      SELECT json_object_agg(
+       v.uloga,
+       json_build_object(
+         'ime', v.ime,
+         'prezime', v.prezime,
+         'kontakt', v.kontakt
         )
-        FROM vodstvo v
-        WHERE v.dvd_id = d.dvd_id
-      ) AS vodstvo,
-      d.godina_osnutka,
-      d.broj_clanova
-    FROM dvd d
-    JOIN adresa a ON d.adresa_id = a.adresa_id
-    JOIN gradska_cetvrt g ON d.gradska_cetvrt_id = g.gradska_cetvrt_id
-    WHERE d.dvd_id = $1;
+      )
+      FROM vodstvo v
+      WHERE v.dvd_id = d.dvd_id
+   ) AS vodstvo,
+   d.godina_osnutka,
+   d.broj_clanova
+  FROM dvd d
+  JOIN adresa a ON d.adresa_id = a.adresa_id
+  JOIN gradska_cetvrt g ON d.gradska_cetvrt_id = g.gradska_cetvrt_id
+  WHERE d.dvd_id = $1;
   `;
   const result = await pool.query(query, [id]);
   const dvd = result.rows[0];
@@ -244,6 +249,47 @@ const deleteDvd = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc uredi postojeci DVD
+// @route PATCH /dvdi/edit/:id
+
+const editDvd = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const dvd = req.body;
+
+  try {
+    await pool.query("BEGIN");
+
+    await updateDvd(
+      id,
+      dvd.naziv,
+      dvd.oib,
+      dvd.adresa.adresa_id,
+      dvd.gradska_cetvrt.gradska_cetvrt_id,
+      dvd.email,
+      dvd.telefon,
+      dvd.web_stranica,
+      dvd.godina_osnutka,
+      dvd.broj_clanova
+    );
+
+    await updateAddress(dvd.adresa);
+
+    await updateVodstvo(id, dvd.vodstvo);
+
+    await pool.query("COMMIT");
+
+    res.status(200).json({
+      status: "OK",
+      message: "DVD updated!",
+    });
+  } catch (error) {
+    await pool.query("ROLLBACK");
+    res
+      .status(500)
+      .send({ status: "DATABASE ERROR", message: "DVD not edited!" });
+  }
+});
+
 module.exports = {
   getDvds,
   getDvd,
@@ -252,4 +298,5 @@ module.exports = {
   getWebPages,
   createDvd,
   deleteDvd,
+  editDvd,
 };

@@ -11,5 +11,6 @@ router
   .route("/id/:id")
   .get(dvdController.getDvd)
   .delete(dvdController.deleteDvd);
+router.route("/uredi/:id").patch(dvdController.editDvd);
 
 module.exports = router;

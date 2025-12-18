@@ -1,9 +1,9 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AlertPopUp from "../../components/AlertPopUp";
 import api from "../../api/api";
-import { FaTrashCan } from "react-icons/fa6";
+import { FaTrashCan, FaPenToSquare } from "react-icons/fa6";
 
 const Dvd = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Dvd = () => {
   };
 
   if (loading) {
-    return <p>Učitavanje detalja DVD-a...</p>;
+    return <p className="loader">Učitavanje detalja DVD-a...</p>;
   }
 
   if (error) {
@@ -61,14 +61,19 @@ const Dvd = () => {
 
   return (
     <div className="dvd-container">
-      <button
-        title="Izbriši DVD"
-        type="button"
-        onClick={onDeleteClicked}
-        className="delete-btn"
-      >
-        <FaTrashCan size={20} />
-      </button>
+      <div className="dvd-delete-edit-buttons">
+        <button
+          title="Izbriši DVD"
+          type="button"
+          onClick={onDeleteClicked}
+          className="delete-btn"
+        >
+          <FaTrashCan size={20} />
+        </button>
+        <Link to={`/dvdi/uredi/${id}`} className="edit-btn" title="Uredi DVD">
+          <FaPenToSquare size={20} />
+        </Link>
+      </div>
       <h1 className="dvd-title">{dvd.naziv}</h1>
 
       <div className="dvd-card">
@@ -79,7 +84,7 @@ const Dvd = () => {
 
         <div className="dvd-section">
           <h2>Gradska četvrt</h2>
-          <p>{dvd.gradska_cetvrt}</p>
+          <p>{dvd.gradska_cetvrt.naziv}</p>
         </div>
 
         <div className="dvd-section">
@@ -117,9 +122,9 @@ const Dvd = () => {
         <div className="dvd-section">
           <h2>Vodstvo</h2>
           <ul className="dvd-list">
-            {dvd.vodstvo.map((v, i) => (
-              <li key={i}>
-                {`${v.uloga}: ${v.ime} ${v.prezime} (${v.kontakt})`}
+            {Object.entries(dvd.vodstvo).map(([uloga, osoba]) => (
+              <li key={uloga}>
+                {`${uloga}: ${osoba.ime} ${osoba.prezime} (${osoba.kontakt})`}
               </li>
             ))}
           </ul>
