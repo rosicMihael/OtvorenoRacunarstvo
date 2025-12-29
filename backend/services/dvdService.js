@@ -14,8 +14,8 @@ const getDvdsData = async ({
     telefon: ["d.telefon"],
     webStranica: ["d.web_stranica"],
     OIB: ["d.oib"],
-    godinaOsnutka: ["d.godina_osnutka::text"],
-    brojClanova: ["d.broj_clanova::text"],
+    godinaOsnutka: ["d.godina_osnutka"],
+    brojClanova: ["d.broj_clanova"],
   };
 
   const fields = allFields[selectedField] || [];
@@ -50,30 +50,32 @@ const getDvdsData = async ({
 
   const query = `
     SELECT
-      d.dvd_id,
       d.naziv,
       json_build_object(
+        'adresa_id', a.adresa_id,
         'ulica', a.ulica,
         'postanski_broj', a.postanski_broj,
         'grad', a.grad
       ) AS adresa,
-      g.naziv AS gradska_cetvrt,
+      json_build_object(
+        'gradska_cetvrt_id', g.gradska_cetvrt_id,
+        'naziv', g.naziv
+      ) AS gradska_cetvrt,
       d.email,
       d.telefon,
       d.web_stranica,
       d.oib AS OIB,
       (
-        SELECT json_agg(
-          json_build_object(
-            'uloga', v.uloga,
-            'ime', v.ime,
-            'prezime', v.prezime,
-            'kontakt', v.kontakt
-          )
-          ORDER BY v.vodstvo_id
+      SELECT json_object_agg(
+       v.uloga,
+       json_build_object(
+         'ime', v.ime,
+         'prezime', v.prezime,
+         'kontakt', v.kontakt
         )
-        FROM vodstvo v
-        WHERE v.dvd_id = d.dvd_id
+      )
+      FROM vodstvo v
+      WHERE v.dvd_id = d.dvd_id
       ) AS vodstvo,
       d.godina_osnutka,
       d.broj_clanova

@@ -157,7 +157,7 @@ const DvdList = () => {
             <tr key={index}>
               <td>{dvd.naziv}</td>
               <td>{`${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`}</td>
-              <td>{dvd.gradska_cetvrt}</td>
+              <td>{dvd.gradska_cetvrt.naziv}</td>
               <td>{dvd.email}</td>
               <td>{dvd.telefon}</td>
               <td>{dvd.web_stranica}</td>
@@ -165,11 +165,10 @@ const DvdList = () => {
               <td>{dvd.godina_osnutka}</td>
               <td>{dvd.broj_clanova}</td>
               <td>
-                {dvd.vodstvo
-                  .map(
-                    (v) => `${v.uloga}: ${v.ime} ${v.prezime} (${v.kontakt})`
-                  )
-                  .join(", ")}
+                {Object.entries(dvd.vodstvo).map(
+                  ([uloga, osoba]) =>
+                    `${uloga}: ${osoba.ime} ${osoba.prezime} (${osoba.kontakt}) `
+                )}
               </td>
               <td className="tablica-detalji">
                 <Link to={`/dvdi/id/${dvd.dvd_id}`}>
