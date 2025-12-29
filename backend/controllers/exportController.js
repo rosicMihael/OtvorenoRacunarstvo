@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const getDvdsData = require("../services/dvdService");
+const { getDvdsData } = require("../services/dvdService");
 const { Parser } = require("json2csv");
 
 // @desc export u JSON format

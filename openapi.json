@@ -1,0 +1,532 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DVD-i (Dobrovoljna vatrogasna društva) API",
+    "version": "1.0",
+    "contact": {
+      "name": "Mihael Rošić",
+      "email": "mihael.rosic@fer.unizg.hr"
+    },
+    "license": {
+      "name": "CC0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  "tags": [
+    {
+      "name": "DVD",
+      "description": "Operacije nad dobrovoljnim vatrogasnim društvima"
+    },
+    {
+      "name": "Export",
+      "description": "Izvoz podataka u JSON/CSV formatu"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Adresa": {
+        "type": "object",
+        "properties": {
+          "adresa_id": {
+            "type": "integer"
+          },
+          "ulica": {
+            "type": "string"
+          },
+          "postanski_broj": {
+            "type": "string"
+          },
+          "grad": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "adresa_id",
+          "ulica",
+          "postanski_broj",
+          "grad"
+        ]
+      },
+      "GradskaCetvrt": {
+        "type": "object",
+        "properties": {
+          "gradska_cetvrt_id": {
+            "type": "integer"
+          },
+          "naziv": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "gradska_cetvrt_id",
+          "naziv"
+        ]
+      },
+      "VodstvoEntry": {
+        "type": "object",
+        "properties": {
+          "ime": {
+            "type": "string"
+          },
+          "prezime": {
+            "type": "string"
+          },
+          "kontakt": {
+            "type": "string"
+          }
+        }
+      },
+      "Dvd": {
+        "type": "object",
+        "properties": {
+          "naziv": {
+            "type": "string"
+          },
+          "adresa": {
+            "$ref": "#/components/schemas/Adresa"
+          },
+          "gradska_cetvrt": {
+            "$ref": "#/components/schemas/GradskaCetvrt"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telefon": {
+            "type": "string"
+          },
+          "web_stranica": {
+            "type": "string"
+          },
+          "OIB": {
+            "type": "string"
+          },
+          "vodstvo": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/VodstvoEntry"
+            },
+            "description": "Objekt gdje je ključ uloga (npr. \"predsjednik\"), a vrijednost objekt s ime, prezime i kontakt"
+          },
+          "godina_osnutka": {
+            "type": "integer"
+          },
+          "broj_clanova": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "naziv",
+          "adresa",
+          "gradska_cetvrt"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/dvdi": {
+      "get": {
+        "tags": ["DVD"],
+        "summary": "Dohvat svih DVD-a",
+        "description": "Vraća popis svih DVD-a iz baze podataka.",
+        "responses": {
+          "200": {
+            "description": "Uspješan dohvat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "Fetched DVDs data!" },
+                    "response": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Dvd" }
+                    }
+                  },
+                  "required": ["status", "message", "response"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nema pronađenih DVD-a",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "NOT FOUND" },
+                    "message": { "type": "string", "example": "No DVDs found!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["DVD"],
+        "summary": "Kreiranje novog DVD-a",
+        "description": "Dodaje novi DVD u bazu podataka.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dvd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "DVD uspješno kreiran",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "DVD created!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greška baze podataka",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "status": { "type": "string", "example": "DATABASE ERROR" },
+                            "message": { "type": "string", "example": "Database error message" }
+                        },
+                        "required": ["status", "message"]
+                    }
+                }
+            }
+          }
+        }
+      }
+    },
+    "/dvdi/{id}": {
+      "get": {
+        "tags": ["DVD"],
+        "summary": "Dohvat DVD-a po ID-u",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID DVD-a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DVD pronađen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "Fetched DVD object!" },
+                    "response": { "$ref": "#/components/schemas/Dvd" }
+                  },
+                  "required": ["status", "message", "response"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "DVD nije pronađen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "NOT FOUND" },
+                    "message": { "type": "string", "example": "DVD with given ID not found!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["DVD"],
+        "summary": "Ažuriranje postojećeg DVD-a",
+        "description": "Potpuna zamjena podataka DVD-a (PUT metoda).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID DVD-a"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dvd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "DVD uspješno ažuriran",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "DVD updated!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greška baze podataka",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "status": { "type": "string", "example": "DATABASE ERROR" },
+                            "message": { "type": "string", "example": "Database error message" }
+                        },
+                        "required": ["status", "message"]
+                    }
+                }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["DVD"],
+        "summary": "Brisanje DVD-a",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID DVD-a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DVD uspješno obrisan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "DVD deleted!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Greška baze podataka",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "status": { "type": "string", "example": "DATABASE ERROR" },
+                            "message": { "type": "string", "example": "Database error message" }
+                        },
+                        "required": ["status", "message"]
+                    }
+                }
+            }
+          }
+        }
+      }
+    },
+    "/dvdi/gradske_cetvrti": {
+      "get": {
+        "tags": ["DVD"],
+        "summary": "Dohvat svih gradskih četvrti",
+        "responses": {
+          "200": {
+            "description": "Uspješan dohvat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "Fetched city squares!" },
+                    "response": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/GradskaCetvrt" }
+                    }
+                  },
+                  "required": ["status", "message", "response"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nema pronađenih gradskih četvrti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "NOT FOUND" },
+                    "message": { "type": "string", "example": "No city squares found!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dvdi/emailovi": {
+      "get": {
+        "tags": ["DVD"],
+        "summary": "Dohvat svih email adresa DVD-a",
+        "responses": {
+          "200": {
+            "description": "Uspješan dohvat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "Fetched emails!" },
+                    "response": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  },
+                  "required": ["status", "message", "response"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nema pronađenih email adresa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "NOT FOUND" },
+                    "message": { "type": "string", "example": "No emails found!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dvdi/web_stranice": {
+      "get": {
+        "tags": ["DVD"],
+        "summary": "Dohvat svih web stranica DVD-a",
+        "responses": {
+          "200": {
+            "description": "Uspješan dohvat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "OK" },
+                    "message": { "type": "string", "example": "Fetched web pages!" },
+                    "response": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  },
+                  "required": ["status", "message", "response"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nema pronađenih web stranica",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "NOT FOUND" },
+                    "message": { "type": "string", "example": "No web pages found!" }
+                  },
+                  "required": ["status", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export/json": {
+      "get": {
+        "tags": ["Export"],
+        "summary": "Izvoz svih DVD-a u JSON formatu",
+        "description": "Vraća sve DVD podatke kao JSON datoteku za download.",
+        "responses": {
+          "200": {
+            "description": "JSON datoteka",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Dvd" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export/csv": {
+      "get": {
+        "tags": ["Export"],
+        "summary": "Izvoz svih DVD-a u CSV formatu",
+        "description": "Vraća sve DVD podatke kao CSV datoteku za download.",
+        "responses": {
+          "200": {
+            "description": "CSV datoteka",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ const Navbar = () => {
       <div className="navLinksRight">
         <Link to="/dvdi">Lista DVD-a</Link>
         <Link to="/dvdi/novi">Dodaj novi DVD</Link>
+        <Link to="http://localhost:3500/openapi">Pregledj OpenApi</Link>
       </div>
     </nav>
   );

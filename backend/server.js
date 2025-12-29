@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3500;
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const { connectDB } = require("./config/dbConn");
+const openapiJson = require("../openapi.json");
 
 app.use(cors(corsOptions));
 
@@ -17,6 +18,10 @@ app.use("/", require("./routes/root"));
 app.use("/dvdi", require("./routes/dvdRoutes"));
 
 app.use("/export", require("./routes/exportRoutes"));
+
+app.get("/openapi", (req, res) => {
+  res.json(openapiJson);
+});
 
 app.use((req, res) => {
   res.status(404);
