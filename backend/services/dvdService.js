@@ -14,8 +14,8 @@ const getDvdsData = async ({
     telefon: ["d.telefon"],
     webStranica: ["d.web_stranica"],
     OIB: ["d.oib"],
-    godinaOsnutka: ["d.godina_osnutka"],
-    brojClanova: ["d.broj_clanova"],
+    godinaOsnutka: ["d.godina_osnutka::text"],
+    brojClanova: ["d.broj_clanova::text"],
   };
 
   const fields = allFields[selectedField] || [];
@@ -50,6 +50,7 @@ const getDvdsData = async ({
 
   const query = `
     SELECT
+      d.dvd_id,
       d.naziv,
       json_build_object(
         'adresa_id', a.adresa_id,

@@ -36,6 +36,7 @@ const getDvd = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const query = `
    SELECT
+   d.dvd_id,
    d.naziv,
    json_build_object(
       'adresa_id', a.adresa_id,

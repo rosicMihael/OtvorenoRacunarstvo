@@ -79,6 +79,9 @@
       "Dvd": {
         "type": "object",
         "properties": {
+          "dvd_id" : {
+            "type": "integer"
+          },
           "naziv": {
             "type": "string"
           },
