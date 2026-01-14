@@ -155,14 +155,14 @@ const DvdList = () => {
         <tbody>
           {tableData.map((dvd, index) => (
             <tr key={index}>
-              <td>{dvd.naziv}</td>
-              <td>{`${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`}</td>
-              <td>{dvd.gradska_cetvrt.naziv}</td>
+              <td>{dvd.legalName}</td>
+              <td>{`${dvd.address.streetAddress}, ${dvd.address.postalCode} ${dvd.address.addressLocality}`}</td>
+              <td>{dvd.areaServed.name}</td>
               <td>{dvd.email}</td>
-              <td>{dvd.telefon}</td>
-              <td>{dvd.web_stranica}</td>
-              <td>{dvd.oib}</td>
-              <td>{dvd.godina_osnutka}</td>
+              <td>{dvd.telephone}</td>
+              <td>{dvd.url}</td>
+              <td>{dvd.vatID}</td>
+              <td>{dvd.foundingDate}</td>
               <td>{dvd.broj_clanova}</td>
               <td>
                 {Object.entries(dvd.vodstvo).map(
@@ -171,7 +171,7 @@ const DvdList = () => {
                 )}
               </td>
               <td className="tablica-detalji">
-                <Link to={`/dvdi/id/${dvd.dvd_id}`}>
+                <Link to={`/dvdi/id/${dvd.id}`}>
                   <FaArrowUpRightFromSquare />
                 </Link>
               </td>

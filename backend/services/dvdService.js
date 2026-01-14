@@ -88,7 +88,31 @@ const getDvdsData = async ({
   `;
 
   const result = await pool.query(query, values);
-  return result.rows;
+
+  const semanticDvds = result.rows.map((dvd) => ({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    id: dvd.dvd_id,
+    legalName: dvd.naziv,
+    foundingDate: dvd.godina_osnutka.toString(),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: dvd.adresa.ulica,
+      postalCode: dvd.adresa.postanski_broj,
+      addressLocality: dvd.adresa.grad,
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: dvd.gradska_cetvrt.naziv,
+    },
+    email: dvd.email,
+    telephone: dvd.telefon,
+    url: dvd.web_stranica,
+    vatID: dvd.oib,
+    broj_clanova: dvd.broj_clanova,
+    vodstvo: dvd.vodstvo,
+  }));
+  return semanticDvds;
 };
 
 const getOrCreateQuarter = async (naziv) => {

@@ -75,9 +75,35 @@ const getDvd = asyncHandler(async (req, res) => {
   const dvd = result.rows[0];
 
   if (dvd) {
-    res
-      .status(200)
-      .json({ status: "OK", message: "Fetched DVD object!", response: dvd });
+    const semanticDvd = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      id: dvd.dvd_id,
+      legalName: dvd.naziv,
+      foundingDate: dvd.godina_osnutka.toString(),
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: dvd.adresa.ulica,
+        postalCode: dvd.adresa.postanski_broj,
+        addressLocality: dvd.adresa.grad,
+      },
+      areaServed: {
+        "@type": "AdministrativeArea",
+        name: dvd.gradska_cetvrt.naziv,
+      },
+      email: dvd.email,
+      telephone: dvd.telefon,
+      url: dvd.web_stranica,
+      vatID: dvd.oib,
+      broj_clanova: dvd.broj_clanova,
+      vodstvo: dvd.vodstvo,
+    };
+
+    res.status(200).json({
+      status: "OK",
+      message: "Fetched DVD object!",
+      response: semanticDvd,
+    });
   } else {
     res.status(404).send({
       status: "NOT FOUND",
@@ -215,12 +241,18 @@ const createDvd = asyncHandler(async (req, res) => {
 });
 
 // @desc obrisi DVD
-// @route POST /dvdi/:id
+// @route DELETE /dvdi/:id
 
 const deleteDvd = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
+    const result = await pool.query(`SELECT * FROM dvd WHERE dvd_id = $1`, [
+      id,
+    ]);
+
+    if (result.rowCount === 0) throw new Error("Dvd ne postoji!");
+
     await pool.query("BEGIN");
 
     await pool.query(`DELETE FROM vodstvo WHERE dvd_id = $1`, [id]);

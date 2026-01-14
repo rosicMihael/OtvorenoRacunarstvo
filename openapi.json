@@ -77,52 +77,50 @@
         }
       },
       "Dvd": {
+  "type": "object",
+  "properties": {
+    "@context": { "type": "string", "example": "https://schema.org" },
+    "@type": { "type": "string", "example": "Organization" },
+    "id": { "type": "integer", "example": 1 },
+    "legalName": { "type": "string", "example": "DVD Example" },
+    "foundingDate": { "type": "string", "example": "1999" },
+    "address": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "example": "PostalAddress" },
+        "streetAddress": { "type": "string", "example": "Ulica 1" },
+        "postalCode": { "type": "string", "example": "10000" },
+        "addressLocality": { "type": "string", "example": "Zagreb" }
+      }
+    },
+    "areaServed": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "example": "AdministrativeArea" },
+        "name": { "type": "string", "example": "Donji Grad" }
+      }
+    },
+    "email": { "type": "string", "example": "dvd@example.hr" },
+    "telephone": { "type": "string", "example": "+38512345678" },
+    "url": { "type": "string", "example": "https://www.dvd-example.hr" },
+    "vatID": { "type": "string", "example": "12345678901" },
+    "memberCount": { "type": "integer", "example": 120 },
+    "leadership": {
+      "type": "object",
+      "additionalProperties": {
         "type": "object",
         "properties": {
-          "dvd_id" : {
-            "type": "integer"
-          },
-          "naziv": {
-            "type": "string"
-          },
-          "adresa": {
-            "$ref": "#/components/schemas/Adresa"
-          },
-          "gradska_cetvrt": {
-            "$ref": "#/components/schemas/GradskaCetvrt"
-          },
-          "email": {
-            "type": "string"
-          },
-          "telefon": {
-            "type": "string"
-          },
-          "web_stranica": {
-            "type": "string"
-          },
-          "OIB": {
-            "type": "string"
-          },
-          "vodstvo": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/VodstvoEntry"
-            },
-            "description": "Objekt gdje je ključ uloga (npr. \"predsjednik\"), a vrijednost objekt s ime, prezime i kontakt"
-          },
-          "godina_osnutka": {
-            "type": "integer"
-          },
-          "broj_clanova": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "naziv",
-          "adresa",
-          "gradska_cetvrt"
-        ]
-      }
+          "ime": { "type": "string", "example": "Ivan" },
+          "prezime": { "type": "string", "example": "Ivić" },
+          "kontakt": { "type": "string", "example": "ivan@example.hr" }
+        }
+      },
+      "description": "Vodstvo organizacije: ključ je uloga, vrijednost je osoba s imenom, prezimenom i kontaktom"
+    }
+  },
+  "required": ["@context","@type","id","legalName","foundingDate","address","areaServed"]
+}
+
     }
   },
   "paths": {

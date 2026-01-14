@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const PORT = process.env.PORT || 3500;
+const PORT = 3500;
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const { connectDB } = require("./config/dbConn");
@@ -15,13 +15,13 @@ app.use(express.static("public"));
 
 app.use("/", require("./routes/root"));
 
-app.use("/dvdi", require("./routes/dvdRoutes"));
-
-app.use("/export", require("./routes/exportRoutes"));
-
 app.get("/openapi", (req, res) => {
   res.json(openapiJson);
 });
+
+app.use("/dvdi", require("./routes/dvdRoutes"));
+
+app.use("/export", require("./routes/exportRoutes"));
 
 app.use((req, res) => {
   res.status(404);

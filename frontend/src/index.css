@@ -57,6 +57,21 @@ body {
   text-decoration: underline;
 }
 
+.nav-btn {
+  border: 1px solid black;
+  height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  background-color: white;
+  font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+  color: white;
+  background-color: black;
+}
+
 .navLinksRight {
   display: flex;
   gap: 15px;
@@ -422,4 +437,34 @@ select {
   cursor: pointer;
   background-color: #333;
   color: white;
+}
+
+/* PROFILE STYLES */
+
+.profile-page {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-page h1 {
+  text-align: center;
+}
+
+.profile-info {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.profile-info img {
+  max-width: 150px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 1rem;
 }

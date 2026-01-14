@@ -74,17 +74,20 @@ const Dvd = () => {
           <FaPenToSquare size={20} />
         </Link>
       </div>
-      <h1 className="dvd-title">{dvd.naziv}</h1>
+
+      <h1 className="dvd-title">{dvd.legalName}</h1>
 
       <div className="dvd-card">
         <div className="dvd-section">
           <h2>Adresa</h2>
-          <p>{`${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`}</p>
+          <p>
+            {`${dvd.address.streetAddress}, ${dvd.address.postalCode} ${dvd.address.addressLocality}`}
+          </p>
         </div>
 
         <div className="dvd-section">
           <h2>Gradska četvrt</h2>
-          <p>{dvd.gradska_cetvrt.naziv}</p>
+          <p>{dvd.areaServed.name}</p>
         </div>
 
         <div className="dvd-section">
@@ -94,24 +97,26 @@ const Dvd = () => {
 
         <div className="dvd-section">
           <h2>Telefon</h2>
-          <p>{dvd.telefon}</p>
+          <p>{dvd.telephone}</p>
         </div>
 
         <div className="dvd-section">
           <h2>Web stranica</h2>
           <p>
-            <a href={dvd.web_stranica}>{dvd.web_stranica}</a>
+            <a href={dvd.url} target="_blank" rel="noopener noreferrer">
+              {dvd.url}
+            </a>
           </p>
         </div>
 
         <div className="dvd-section">
           <h2>OIB</h2>
-          <p>{dvd.oib}</p>
+          <p>{dvd.vatID}</p>
         </div>
 
         <div className="dvd-section">
           <h2>Godina osnutka</h2>
-          <p>{dvd.godina_osnutka}</p>
+          <p>{dvd.foundingDate}</p>
         </div>
 
         <div className="dvd-section">
@@ -122,11 +127,12 @@ const Dvd = () => {
         <div className="dvd-section">
           <h2>Vodstvo</h2>
           <ul className="dvd-list">
-            {Object.entries(dvd.vodstvo).map(([uloga, osoba]) => (
-              <li key={uloga}>
-                {`${uloga}: ${osoba.ime} ${osoba.prezime} (${osoba.kontakt})`}
-              </li>
-            ))}
+            {dvd.vodstvo &&
+              Object.entries(dvd.vodstvo).map(([uloga, osoba]) => (
+                <li key={uloga}>
+                  {`${uloga}: ${osoba.ime} ${osoba.prezime} (${osoba.kontakt})`}
+                </li>
+              ))}
           </ul>
         </div>
       </div>

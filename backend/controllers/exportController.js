@@ -30,17 +30,20 @@ const exportDvdsToCSV = asyncHandler(async (req, res) => {
   ];
 
   const rows = dvds.map((dvd) => ({
-    Naziv: dvd.naziv,
-    Adresa: `${dvd.adresa.ulica}, ${dvd.adresa.postanski_broj} ${dvd.adresa.grad}`,
-    "Gradska četvrt": dvd.gradska_cetvrt,
+    Naziv: dvd.legalName,
+    Adresa: `${dvd.address.streetAddress}, ${dvd.address.postalCode} ${dvd.address.addressLocality}`,
+    "Gradska četvrt": dvd.areaServed.name,
     Email: dvd.email,
-    Telefon: dvd.telefon,
-    "Web stranica": dvd.web_stranica,
-    OIB: dvd.oib,
-    "Godina osnutka": dvd.godina_osnutka,
+    Telefon: dvd.telephone,
+    "Web stranica": dvd.url,
+    OIB: dvd.vatID,
+    "Godina osnutka": dvd.foundingDate,
     "Broj članova": dvd.broj_clanova,
-    Vodstvo: dvd.vodstvo
-      .map((v) => `${v.uloga}: ${v.ime} ${v.prezime} (${v.kontakt})`)
+    Vodstvo: Object.entries(dvd.vodstvo)
+      .map(
+        ([uloga, osoba]) =>
+          `${uloga}: ${osoba.ime} ${osoba.prezime} (${osoba.kontakt})`
+      )
       .join("; "),
   }));
 
